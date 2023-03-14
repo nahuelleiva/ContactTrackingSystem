@@ -12,5 +12,4 @@ Simple contact tracking system with search and contact creation features.
 # Considerations
 * In order to get the project up and running, you need to clone the repo first
 * In order to run the Angular project, you will need to install NodeJS if it's not already installed in your system
-* Then install the node modules: navigate to the ClientApp folder and execute `npm install` -- this will install all the Angular dependencies.
-* Then run the project using Visual Studio
+* By running the project using Visual Studio, the system will automatically start installing the node modules for the Angular project -- this is why it is important to have NodeJS already intalled.
