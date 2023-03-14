@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Contact } from 'src/models/contact';
-import { CreateContactComponent } from '../create-contact/create-contact.component';
 import { NotificationService } from '../shared/notifications.service';
 import { HomeService } from './home.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -25,14 +25,23 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private _homeService: HomeService,
-    private _notifications: NotificationService
+    private _notifications: NotificationService,
+    private _toastr: ToastrService
   ) {}
 
   ngOnInit() {
     this.getContacts();
 
     this.subscriptions.add(this._notifications.clientData$.subscribe(r => {
-      this._homeService.createContact(r).subscribe(() => {}, (error) => { console.log(error)});
+      this._homeService.createContact(r).subscribe({
+        next: () => {
+          this._toastr.success("Contact has been created successfully!");
+        },
+        error: (error) => {
+          this._toastr.error("An error has occurred while creating the contact. Consider checking the logs for further information");
+          console.log(error);
+        }
+      });
       this.getContacts();
     }));
   }
@@ -52,8 +61,11 @@ export class HomeComponent implements OnInit {
   }
 
   getContacts() {
-    this._homeService.getContacts().subscribe(result => {
-      this.rows = result;
+    this._homeService.getContacts().subscribe({
+      next: (result) => {
+        this.rows = result;
+      },
+      error: (err) => { console.log(err); }
     });
   }
 }

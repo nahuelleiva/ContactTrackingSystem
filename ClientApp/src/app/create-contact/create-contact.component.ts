@@ -1,15 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Contact } from 'src/models/contact';
 import { NotificationService } from '../shared/notifications.service';
-import { ToastrService } from 'ngx-toastr';
+import { Modal } from 'bootstrap';
 
 @Component({
     selector: 'create-contact',
     templateUrl: './create-contact.component.html'
 })
 export class CreateContactComponent implements OnInit {
+  @ViewChild("createContactModal") createContactModal: ElementRef;
+  modal: Modal;
+
   displayStyle: string = "none";
   subscriptions = new Subscription();
   firstName: string = "";
@@ -22,12 +25,16 @@ export class CreateContactComponent implements OnInit {
 
 	constructor(
     private _notifications: NotificationService,
-    private _formBuilder: FormBuilder,
-    private _toastr: ToastrService) {}
+    private _formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.subscriptions.add(this._notifications.openCloseModal$.subscribe(r => {
-      this.displayStyle = r;
+      // Creating the modal in case the reference is null
+      if (this.modal == null) {
+        this.modal = new Modal(this.createContactModal.nativeElement);
+      }
+
+      this.modal.show();
     }));
 
     this.createNewContactForm = this._formBuilder.group({
@@ -40,7 +47,7 @@ export class CreateContactComponent implements OnInit {
   }
 
   closePopup() {
-    this.displayStyle = "none";
+    this.modal.hide();
     this.submitted = false;
   }
 
@@ -65,6 +72,5 @@ export class CreateContactComponent implements OnInit {
 
     this._notifications.emitClientData(newContact);
     this.closePopup();
-    this._toastr.success("Contact created successfully!");
   }
 }

@@ -16,6 +16,16 @@ namespace ContactTrackingSystem
             // Add services to the container.
 
             builder.Services.AddControllersWithViews();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", 
+                    new Microsoft.OpenApi.Models.OpenApiInfo { 
+                        Title = "Contact Tracking System", 
+                        Description = "Angular application with Swagger", 
+                        Version = "V1" 
+                    });
+            });
             builder.Services.AddDbContext<ContactTrackingSystemDbContext>(op =>
             {
                 op.UseSqlite(builder.Configuration.GetConnectionString("DefaultDatabase"));
@@ -40,6 +50,11 @@ namespace ContactTrackingSystem
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Test1 Api v1");
+            });
             app.UseRouting();
 
 
