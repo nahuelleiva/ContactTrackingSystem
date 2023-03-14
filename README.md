@@ -2,6 +2,7 @@
 Simple contact tracking system with search and contact creation features.
 
 # Features
+* Search feature by multiple criteria
 * Built in Angular v14 with .NET Core 6 and C#
 * Swagger integration so users can have access to the API (add `/swagger` at the end of the URL)
 * SQLite and Entity Framework Core for data persistence
