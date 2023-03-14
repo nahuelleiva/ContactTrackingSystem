@@ -1,0 +1,42 @@
+<div class="modal" tabindex="-1" role="dialog" [style.display]="displayStyle">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title">Create new contact</h4>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="createNewContactForm" (ngSubmit)="submit()">
+              <div>
+                <label for="firstName">First Name</label>
+                <input class="form-control" name="firstName" type="text" [(ngModel)]="firstName" formControlName="firstName">
+                <div *ngIf="submitted && createNewContactForm.controls['firstName'].errors?.required">Password is required</div>
+              </div>
+              <div>
+                <label for="lastName">Last Name</label>
+                <input class="form-control" name="lastName" type="text" [(ngModel)]="lastName" formControlName="lastName">
+                <div *ngIf="submitted && createNewContactForm.controls['lastName'].errors?.required">Password is required</div>
+              </div>
+              <div>
+                <label for="emailAddress">Email Address</label>
+                <input class="form-control" name="emailAddress" type="text" [(ngModel)]="emailAddress" formControlName="emailAddress">
+                <div *ngIf="submitted && createNewContactForm.controls['emailAddress'].errors?.required">Password is required</div>
+              </div>
+              <div>
+                <label for="phoneNumber">Phone Number</label>
+                <input class="form-control" name="phoneNumber" type="text" [(ngModel)]="phoneNumber" formControlName="phoneNumber">
+                <div *ngIf="submitted && createNewContactForm.controls['phoneNumber'].errors?.required">Password is required</div>
+              </div>
+              <div>
+                <label for="zipCode">Residential ZIP Code</label>
+                <input class="form-control" type="text" name="zipCode" [(ngModel)]="zipCode" formControlName="zipCode">
+                <div *ngIf="submitted && createNewContactForm.controls['zipCode'].errors?.required">Password is required</div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-danger" (click)="closePopup()">Close</button>
+              </div>
+            </form>
+          </div>
+      </div>
+  </div>
+</div>

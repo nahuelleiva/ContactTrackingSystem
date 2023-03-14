@@ -1,0 +1,48 @@
+<h1 class="text-center">Welcome</h1>
+<br>
+<div>
+    <h4>Search contacts by criteria</h4>
+    <div class="search-inputs">
+      <div>
+        <label for="firstName">First Name</label>
+        <input class="form-control" name="firstName" type="text" [(ngModel)]="firstName">
+      </div>
+      <div>
+        <label for="lastName">Last Name</label>
+        <input class="form-control" name="lastName" type="text" [(ngModel)]="lastName">
+      </div>
+      <div>
+        <label for="emailAddress">Email Address</label>
+        <input class="form-control" name="emailAddress" type="text" [(ngModel)]="emailAddress">
+      </div>
+      <div>
+        <label for="phoneNumber">Phone Number</label>
+        <input class="form-control" name="phoneNumber" type="text" [(ngModel)]="phoneNumber">
+      </div>
+      <div>
+        <label for="zipCode">Residential ZIP Code</label>
+        <input class="form-control" type="text" name="zipCode" [(ngModel)]="zipCode">
+      </div>
+    </div>
+    <div>
+      <button class="btn btn-primary" (click)="searchContacts()">Search contact</button>
+    </div>
+</div>
+<p></p>
+<div>
+    <ngx-datatable
+        [rows]="rows"
+        [columns]="columns"
+        class="material"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        rowHeight="auto"
+        columnMode="force"
+        [limit]="5">
+    </ngx-datatable>
+    <p></p>
+    <div class="create-contact">
+        <button class="btn btn-primary" (click)="createContact()">Create new contact</button>
+    </div>
+</div>
+<create-contact></create-contact>
