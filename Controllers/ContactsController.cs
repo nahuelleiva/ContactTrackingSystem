@@ -22,12 +22,12 @@ namespace ContactTrackingSystem.Controllers
 
         [HttpGet]
         [Route("get-contacts")]
-        public async Task<IActionResult> GetContactsList()
+        public async Task<IActionResult> GetContactsList([FromQuery] int pageSize, [FromQuery] int pageNumber)
         {
-            var contacts = await _logicManager.GetContactsList();
-            var mappedContacts = _mapper.Map<List<Contact>, List<ContactDTO>>(contacts);
+            var contacts = await _logicManager.GetContactsList(pageSize, pageNumber);
+            var mappedResult = _mapper.Map<PaginatedResult, PaginatedResultDTO>(contacts);
 
-            return Ok(mappedContacts);
+            return Ok(mappedResult);
         }
 
         [HttpGet]

@@ -27,6 +27,12 @@ code {
   margin-bottom: 20px;
 }
 
+.phone-number-container {
+  display: grid;
+  grid-template-columns: repeat(2, 12% 86%);
+  grid-gap: 2%;
+}
+
 @media only screen and (max-width: 768px) {
     .search-inputs {
         display: block;

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Contact } from 'src/models/contact';
 import { NotificationService } from '../shared/notifications.service';
 import { HomeService } from './home.service';
 import { ToastrService } from 'ngx-toastr';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { PaginatedResult } from 'src/models/paginated-result';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +22,8 @@ export class HomeComponent implements OnInit {
 
   rows: Contact[] = [];
   columns = [{ prop: 'firstName' }, { name: 'Last Name' }, { name: 'Email Address' }, { name: 'Phone Number' }, { name: 'Residential ZIP Code' }];
+  paginatedResult: PaginatedResult;
+  loadingResults = false;
 
   subscriptions = new Subscription();
 
@@ -30,6 +34,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loadingResults = true;
     this.getContacts();
 
     this.subscriptions.add(this._notifications.clientData$.subscribe(r => {
@@ -60,12 +65,22 @@ export class HomeComponent implements OnInit {
     this._notifications.emitOpenCloseModal("block");
   }
 
-  getContacts() {
-    this._homeService.getContacts().subscribe({
+  getContacts(pageSize: number = 5, pageNumber: number = 0) {
+    this._homeService.getContacts(pageSize, pageNumber).subscribe({
       next: (result) => {
-        this.rows = result;
+        this.paginatedResult = result;
+        this.rows = result.contacts;
+        this.loadingResults = false;
       },
       error: (err) => { console.log(err); }
     });
+  }
+
+  /**
+   * Populate the table with new data based on the page number
+   * @param page The page to select
+   */
+  setPage(pageInfo: any) {
+    this.getContacts(pageInfo.pageSize, pageInfo.offset);
   }
 }

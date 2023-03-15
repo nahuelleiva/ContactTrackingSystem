@@ -9,22 +9,55 @@
               <div>
                 <label for="firstName">First Name</label>
                 <input class="form-control" name="firstName" type="text" [(ngModel)]="firstName" formControlName="firstName">
-                <div *ngIf="submitted && createNewContactForm.controls['firstName'].errors?.required">Password is required</div>
+                <div
+                  *ngIf="submitted && createNewContactForm.controls['firstName'].errors?.required"
+                  class="input-warning text-danger mt-1 error">First name is required</div>
               </div>
               <div>
                 <label for="lastName">Last Name</label>
                 <input class="form-control" name="lastName" type="text" [(ngModel)]="lastName" formControlName="lastName">
-                <div *ngIf="submitted && createNewContactForm.controls['lastName'].errors?.required">Password is required</div>
+                <div
+                  *ngIf="submitted && createNewContactForm.controls['lastName'].errors?.required"
+                  class="input-warning text-danger mt-1 error">Last name is required</div>
               </div>
               <div>
                 <label for="emailAddress">Email Address</label>
                 <input class="form-control" name="emailAddress" type="text" [(ngModel)]="emailAddress" formControlName="emailAddress">
-                <div *ngIf="submitted && createNewContactForm.controls['emailAddress'].errors?.required">Password is required</div>
+                <div
+                  *ngIf="submitted && createNewContactForm.controls['emailAddress'].errors?.required"
+                  class="input-warning text-danger mt-1 error">Email address is required</div>
               </div>
               <div>
                 <label for="phoneNumber">Phone Number</label>
-                <input class="form-control" name="phoneNumber" type="text" [(ngModel)]="phoneNumber" formControlName="phoneNumber">
-                <div *ngIf="submitted && createNewContactForm.controls['phoneNumber'].errors?.required">Password is required</div>
+                <div class="phone-number-container">
+                  <div>
+                    <select class="form-control form-control-borderless form-control-select px-0" formControlName="countryCode"
+                      (change)="setCountryCode($event)"
+                      [ngClass]="{ 'error': createNewContactForm.value.countryCode === '' && createNewContactForm.controls['phoneNumber'].touched }"
+                      [required]="createNewContactForm.value.phoneNumber !== ''">
+                      <option style="display:none;"></option>
+                      <option value="54" [selected]="createNewContactForm.value.countryCode === '54'">+54</option>
+                      <option *ngFor="let countryCode of countryCodes" [value]="countryCode"
+                        [selected]="createNewContactForm.value.countryCode === countryCode">
+                        +{{countryCode}}
+                      </option>
+                    </select>
+                  </div>
+                  <div>
+                    <input type="text" formControlName="phoneNumber"
+                      class="form-control form-control-borderless px-0 robot_register_phoneNumber" autocomplete="off"
+                      autofocus="true" [maxlength]="10" [minlength]="10"
+                      [ngClass]="{ 'error': createNewContactForm.controls['phoneNumber'].hasError('phoneNumberInvalid') }" />
+                      <div
+                        *ngIf="submitted && createNewContactForm.controls['phoneNumber'].hasError('phoneNumberInvalid')"
+                        class="input-warning text-danger mt-1 error">
+                        Phone number must be valid
+                      </div>
+                      <div
+                        *ngIf="submitted && createNewContactForm.controls['phoneNumber'].errors?.required"
+                        class="input-warning text-danger mt-1 error">Phone number is required</div>
+                  </div>
+                </div>
               </div>
               <div>
                 <label for="zipCode">Residential ZIP Code</label>

@@ -31,14 +31,20 @@
 <p></p>
 <div>
     <ngx-datatable
-        [rows]="rows"
-        [columns]="columns"
-        class="material"
-        [headerHeight]="50"
-        [footerHeight]="50"
-        rowHeight="auto"
-        columnMode="force"
-        [limit]="5">
+      *ngIf="!loadingResults"
+      [rows]="rows"
+      [columns]="columns"
+      class="material"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      columnMode="force"
+      [scrollbarH]="true"
+      [externalPaging]="true"
+      [count]="paginatedResult.totalRecords"
+      [offset]="paginatedResult.pageNumber"
+      [limit]="paginatedResult.pageSize"
+      (page)="setPage($event)">
     </ngx-datatable>
     <p></p>
     <div class="create-contact">

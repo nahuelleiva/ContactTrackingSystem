@@ -14,13 +14,22 @@ namespace ContactTrackingSystem.Logic
             _context = context;
         }
 
-        public async Task<List<Contact>> GetContactsList()
+        public async Task<PaginatedResult> GetContactsList(int pageSize, int pageNumber)
         {
             try
             {
+                var skip = pageNumber * pageSize;
                 var contacts = await _context.Contacts.ToListAsync();
+                var paginatedResult = new PaginatedResult
+                {
+                    Contacts = contacts.Skip(skip).Take(pageSize),
+                    PageNumber = pageNumber,
+                    PageSize = pageSize,
+                    TotalRecords = contacts.Count,
+                    TotalPages = contacts.Count / pageSize
+                };
 
-                return contacts;
+                return paginatedResult;
             }
             catch (Exception ex)
             {

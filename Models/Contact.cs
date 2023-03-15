@@ -16,6 +16,9 @@ namespace ContactTrackingSystem.Models
         public string LastName { get; set; }
 
         [Required]
+        public string PhoneCountryCode { get; set; }
+
+        [Required]
         public string PhoneNumber { get; set; }
 
         [Required]

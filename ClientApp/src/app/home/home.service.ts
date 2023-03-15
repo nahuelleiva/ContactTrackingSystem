@@ -1,7 +1,8 @@
 import { HttpClient } from "@angular/common/http";
-import { Inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Contact } from "src/models/contact";
 import { environment } from "src/environments/environment";
+import { PaginatedResult } from "src/models/paginated-result";
 
 @Injectable({
     providedIn: "root"
@@ -9,8 +10,15 @@ import { environment } from "src/environments/environment";
 export class HomeService {
     constructor(private _http: HttpClient) {}
 
-    getContacts() {
-        return this._http.get<Contact[]>(environment.baseURL + environment.api.getContacts);
+    getContacts(pageSize: number, pageNumber: number) {
+        return this._http.get<PaginatedResult>(
+          environment.baseURL + environment.api.getContacts,
+          {
+            params: {
+              "pageSize": pageSize,
+              "pageNumber": pageNumber
+            }
+          });
     }
 
     searchContacts(firstName: string = "", lastName: string = "", emailAddress: string = "", phoneNumber: string = "", zipCode: string = "") {

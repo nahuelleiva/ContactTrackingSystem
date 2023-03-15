@@ -15,6 +15,7 @@ namespace ContactTrackingSystem.AutoMapper
         {
             CreateMap<Contact, ContactDTO>();
             CreateMap<ContactDTO, Contact>();
+            CreateMap<PaginatedResult, PaginatedResultDTO>();
         }
     }
 }
