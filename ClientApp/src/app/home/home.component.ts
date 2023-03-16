@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Contact } from 'src/models/contact';
 import { NotificationService } from '../shared/notifications.service';
 import { HomeService } from './home.service';
 import { ToastrService } from 'ngx-toastr';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { PaginatedResult } from 'src/models/paginated-result';
 
 @Component({

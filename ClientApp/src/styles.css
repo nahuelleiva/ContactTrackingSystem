@@ -33,6 +33,12 @@ code {
   grid-gap: 2%;
 }
 
+.form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 @media only screen and (max-width: 768px) {
     .search-inputs {
         display: block;
